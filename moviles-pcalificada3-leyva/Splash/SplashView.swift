@@ -7,31 +7,39 @@ struct SplashView: View {
 
     var body: some View {
         ZStack {
+            // Verde de cancha y morado del escudo: los dos colores de marca.
             LinearGradient(
-                colors: [.wdlPurple, .wdlDeepPurple],
+                colors: [.wdlCourt, .wdlDeepPurple],
                 startPoint: .top,
                 endPoint: .bottom
             )
             .ignoresSafeArea()
 
             Circle()
-                .fill(Color.wdlPurple.opacity(0.35))
-                .frame(width: 340, height: 340)
+                .fill(Color.wdlLime.opacity(0.10))
+                .frame(width: 320, height: 320)
                 .blur(radius: 60)
-                .offset(y: -80)
+                .offset(y: -110)
 
-            VStack(spacing: 28) {
-                Image("LogoWimbledon")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 190, height: 190)
-                    .scaleEffect(appeared ? 1 : 0.6)
-                    .opacity(appeared ? 1 : 0)
+            VStack(spacing: 26) {
+                ZStack {
+                    // Disco blanco: el escudo es morado y necesita contraste.
+                    Circle()
+                        .fill(.white)
+
+                    Image("LogoWimbledon")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 176, height: 176)
+                }
+                .frame(width: 190, height: 190)
+                .scaleEffect(appeared ? 1 : 0.6)
+                .opacity(appeared ? 1 : 0)
 
                 Text("THE CHAMPIONSHIPS")
                     .font(WDLFont.sans(12, weight: .medium))
                     .tracking(3.5)
-                    .foregroundStyle(.white.opacity(0.85))
+                    .foregroundStyle(Color.wdlLime)
             }
         }
         .onAppear {

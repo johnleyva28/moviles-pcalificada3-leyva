@@ -13,7 +13,7 @@ struct RegistroView: View {
     var body: some View {
         ZStack {
             LinearGradient(
-                colors: [.wdlPurple, .wdlDeepPurple],
+                colors: [.wdlCourt, .wdlDeepPurple],
                 startPoint: .top,
                 endPoint: .bottom
             )
@@ -97,7 +97,7 @@ struct RegistroView: View {
                                     .foregroundStyle(.white)
                                     .frame(maxWidth: .infinity)
                                     .padding(.vertical, 16)
-                                    .background(Color.wdlPurple, in: RoundedRectangle(cornerRadius: 12))
+                                    .background(Color.wdlGreen, in: RoundedRectangle(cornerRadius: 12))
                             }
                             .disabled(!viewModel.canSubmit)
                             .opacity(viewModel.canSubmit ? 1 : 0.5)
@@ -105,7 +105,7 @@ struct RegistroView: View {
                             Button(action: onBack) {
                                 Text("¿Ya tienes cuenta? Inicia sesión")
                                     .font(WDLFont.sans(14, weight: .medium))
-                                    .foregroundStyle(Color.wdlPurple)
+                                    .foregroundStyle(Color.wdlGreen)
                             }
                         }
                         .padding(20)

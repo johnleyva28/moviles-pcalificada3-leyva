@@ -5,7 +5,7 @@ struct DetalleView: View {
 
     var body: some View {
         ZStack {
-            Color.wdlPurpleSoft.ignoresSafeArea()
+            Color.wdlMintSoft.ignoresSafeArea()
 
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
@@ -38,7 +38,7 @@ struct DetalleView: View {
     private var hero: some View {
         ZStack {
             LinearGradient(
-                colors: [.wdlPurple, .wdlDeepPurple],
+                colors: [.wdlGrass, .wdlForest],
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )

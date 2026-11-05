@@ -8,7 +8,7 @@ struct PerfilView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color.wdlPurpleSoft.ignoresSafeArea()
+                Color.wdlMintSoft.ignoresSafeArea()
 
                 ScrollView {
                     VStack(spacing: 18) {
@@ -23,7 +23,7 @@ struct PerfilView: View {
                             .foregroundStyle(.white)
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 15)
-                            .background(Color.wdlPurple, in: RoundedRectangle(cornerRadius: 12))
+                            .background(Color.wdlGreen, in: RoundedRectangle(cornerRadius: 12))
                         }
 
                         Text("Wimbledon · The Championships")
@@ -43,7 +43,7 @@ struct PerfilView: View {
         VStack(spacing: 14) {
             ZStack {
                 Circle()
-                    .fill(Color.wdlPurple)
+                    .fill(Color.wdlGrass)
                 Image(systemName: "person.fill")
                     .font(.system(size: 42, weight: .semibold))
                     .foregroundStyle(Color.wdlMint)
@@ -80,7 +80,7 @@ struct PerfilView: View {
         VStack(spacing: 3) {
             Text(value)
                 .font(WDLFont.display(20, weight: .bold))
-                .foregroundStyle(Color.wdlPurple)
+                .foregroundStyle(Color.wdlGreen)
             Text(label)
                 .font(WDLFont.sans(11))
                 .foregroundStyle(Color.wdlInkSecondary)

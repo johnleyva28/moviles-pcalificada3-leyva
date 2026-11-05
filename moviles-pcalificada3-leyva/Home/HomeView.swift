@@ -7,7 +7,7 @@ struct HomeView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color.wdlPurpleSoft.ignoresSafeArea()
+                Color.wdlMintSoft.ignoresSafeArea()
 
                 ScrollView {
                     LazyVStack(spacing: 12) {
@@ -19,10 +19,10 @@ struct HomeView: View {
                             VStack(spacing: 8) {
                                 Image(systemName: "magnifyingglass")
                                     .font(.system(size: 34))
-                                    .foregroundStyle(Color.wdlPurple)
+                                    .foregroundStyle(Color.wdlGreen)
                                 Text("Sin resultados")
                                     .font(WDLFont.display(20, weight: .semibold))
-                                    .foregroundStyle(Color.wdlPurple)
+                                    .foregroundStyle(Color.wdlGreen)
                                 Text("No hay tenistas que coincidan con «\(viewModel.searchText)»")
                                     .font(WDLFont.sans(13))
                                     .foregroundStyle(Color.wdlInkSecondary)
@@ -55,7 +55,7 @@ struct HomeView: View {
             Text("THE CHAMPIONSHIPS")
                 .font(WDLFont.sans(11, weight: .medium))
                 .tracking(3)
-                .foregroundStyle(Color.wdlPurple)
+                .foregroundStyle(Color.wdlGreen)
 
             Text("Las leyendas del tenis")
                 .font(WDLFont.display(28, weight: .bold))
@@ -86,7 +86,7 @@ struct HomeView: View {
         VStack(alignment: .leading, spacing: 6) {
             Image(systemName: insight.icon)
                 .font(.system(size: 16, weight: .semibold))
-                .foregroundStyle(Color.wdlPurple)
+                .foregroundStyle(Color.wdlGreen)
 
             Text(insight.value)
                 .font(WDLFont.display(20, weight: .bold))
@@ -94,7 +94,7 @@ struct HomeView: View {
 
             Text(insight.title)
                 .font(WDLFont.sans(12, weight: .semibold))
-                .foregroundStyle(Color.wdlPurple)
+                .foregroundStyle(Color.wdlGreen)
 
             Text(insight.detail)
                 .font(WDLFont.sans(11))
@@ -113,7 +113,7 @@ struct HomeView: View {
     private var searchBar: some View {
         HStack(spacing: 10) {
             Image(systemName: "magnifyingglass")
-                .foregroundStyle(Color.wdlPurple)
+                .foregroundStyle(Color.wdlGreen)
 
             TextField("Buscar tenista o país", text: $viewModel.searchText)
                 .textInputAutocapitalization(.never)
@@ -158,7 +158,7 @@ struct HomeView: View {
             VStack(alignment: .trailing, spacing: 3) {
                 Text("#\(item.ranking)")
                     .font(WDLFont.sans(14, weight: .semibold))
-                    .foregroundStyle(Color.wdlPurple)
+                    .foregroundStyle(Color.wdlGreen)
                 Text("Ranking")
                     .font(WDLFont.sans(10))
                     .foregroundStyle(Color.wdlInkSecondary)
@@ -179,7 +179,7 @@ struct HomeView: View {
     private func avatar(_ item: ItemModel) -> some View {
         ZStack {
             Circle()
-                .fill(Color.wdlPurple)
+                .fill(Color.wdlGrass)
             Image(item.imageName)
                 .resizable()
                 .scaledToFill()
@@ -188,7 +188,7 @@ struct HomeView: View {
         }
         .frame(width: 52, height: 52)
         .overlay {
-            Circle().strokeBorder(Color.wdlMint, lineWidth: 2)
+            Circle().strokeBorder(Color.wdlLime, lineWidth: 2)
         }
     }
 }
