@@ -12,7 +12,7 @@ struct LoginView: View {
     var body: some View {
         ZStack {
             LinearGradient(
-                colors: [.wdlGreenHover, .wdlDeepGreen],
+                colors: [.wdlPurple, .wdlDeepPurple],
                 startPoint: .top,
                 endPoint: .bottom
             )
@@ -68,7 +68,7 @@ struct LoginView: View {
                                     .foregroundStyle(.white)
                                     .frame(maxWidth: .infinity)
                                     .padding(.vertical, 16)
-                                    .background(Color.wdlGreen, in: RoundedRectangle(cornerRadius: 12))
+                                    .background(Color.wdlPurple, in: RoundedRectangle(cornerRadius: 12))
                             }
                             .disabled(!viewModel.canSubmit)
                             .opacity(viewModel.canSubmit ? 1 : 0.5)
@@ -76,7 +76,7 @@ struct LoginView: View {
                             Button(action: onRegister) {
                                 Text("¿No tienes cuenta? Regístrate")
                                     .font(WDLFont.sans(14, weight: .medium))
-                                    .foregroundStyle(Color.wdlGreen)
+                                    .foregroundStyle(Color.wdlPurple)
                             }
                         }
                         .padding(20)

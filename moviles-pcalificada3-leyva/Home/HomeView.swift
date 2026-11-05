@@ -7,7 +7,7 @@ struct HomeView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color.wdlMintSoft.ignoresSafeArea()
+                Color.wdlPurpleSoft.ignoresSafeArea()
 
                 ScrollView {
                     LazyVStack(spacing: 12) {
@@ -19,10 +19,10 @@ struct HomeView: View {
                             VStack(spacing: 8) {
                                 Image(systemName: "magnifyingglass")
                                     .font(.system(size: 34))
-                                    .foregroundStyle(Color.wdlGreen)
+                                    .foregroundStyle(Color.wdlPurple)
                                 Text("Sin resultados")
                                     .font(WDLFont.display(20, weight: .semibold))
-                                    .foregroundStyle(Color.wdlGreen)
+                                    .foregroundStyle(Color.wdlPurple)
                                 Text("No hay tenistas que coincidan con «\(viewModel.searchText)»")
                                     .font(WDLFont.sans(13))
                                     .foregroundStyle(Color.wdlInkSecondary)
@@ -55,11 +55,11 @@ struct HomeView: View {
             Text("THE CHAMPIONSHIPS")
                 .font(WDLFont.sans(11, weight: .medium))
                 .tracking(3)
-                .foregroundStyle(Color.wdlGreen)
+                .foregroundStyle(Color.wdlPurple)
 
             Text("Las leyendas del tenis")
                 .font(WDLFont.display(28, weight: .bold))
-                .foregroundStyle(Color.wdlForest)
+                .foregroundStyle(Color.wdlDeepPurple)
 
             Text(session.currentUser.map { "Hola, \($0.name)" } ?? "Bienvenido")
                 .font(WDLFont.sans(14))
@@ -86,15 +86,15 @@ struct HomeView: View {
         VStack(alignment: .leading, spacing: 6) {
             Image(systemName: insight.icon)
                 .font(.system(size: 16, weight: .semibold))
-                .foregroundStyle(Color.wdlGreen)
+                .foregroundStyle(Color.wdlPurple)
 
             Text(insight.value)
                 .font(WDLFont.display(20, weight: .bold))
-                .foregroundStyle(Color.wdlForest)
+                .foregroundStyle(Color.wdlDeepPurple)
 
             Text(insight.title)
                 .font(WDLFont.sans(12, weight: .semibold))
-                .foregroundStyle(Color.wdlGreen)
+                .foregroundStyle(Color.wdlPurple)
 
             Text(insight.detail)
                 .font(WDLFont.sans(11))
@@ -113,7 +113,7 @@ struct HomeView: View {
     private var searchBar: some View {
         HStack(spacing: 10) {
             Image(systemName: "magnifyingglass")
-                .foregroundStyle(Color.wdlGreen)
+                .foregroundStyle(Color.wdlPurple)
 
             TextField("Buscar tenista o país", text: $viewModel.searchText)
                 .textInputAutocapitalization(.never)
@@ -146,7 +146,7 @@ struct HomeView: View {
             VStack(alignment: .leading, spacing: 3) {
                 Text(item.name)
                     .font(WDLFont.display(18, weight: .semibold))
-                    .foregroundStyle(Color.wdlForest)
+                    .foregroundStyle(Color.wdlDeepPurple)
 
                 Text(item.subtitle)
                     .font(WDLFont.sans(13))
@@ -158,7 +158,7 @@ struct HomeView: View {
             VStack(alignment: .trailing, spacing: 3) {
                 Text("#\(item.ranking)")
                     .font(WDLFont.sans(14, weight: .semibold))
-                    .foregroundStyle(Color.wdlGreen)
+                    .foregroundStyle(Color.wdlPurple)
                 Text("Ranking")
                     .font(WDLFont.sans(10))
                     .foregroundStyle(Color.wdlInkSecondary)
@@ -179,7 +179,7 @@ struct HomeView: View {
     private func avatar(_ item: ItemModel) -> some View {
         ZStack {
             Circle()
-                .fill(Color.wdlGrass)
+                .fill(Color.wdlPurple)
             Image(item.imageName)
                 .resizable()
                 .scaledToFill()

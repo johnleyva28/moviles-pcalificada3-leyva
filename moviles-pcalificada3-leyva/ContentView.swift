@@ -51,7 +51,7 @@ struct MainTabView: View {
                     Label("Perfil", systemImage: "person.crop.circle")
                 }
         }
-        .tint(Color.wdlGreen)
+        .tint(Color.wdlPurple)
     }
 }
 

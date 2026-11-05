@@ -5,7 +5,7 @@ struct DetalleView: View {
 
     var body: some View {
         ZStack {
-            Color.wdlMintSoft.ignoresSafeArea()
+            Color.wdlPurpleSoft.ignoresSafeArea()
 
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
@@ -14,7 +14,7 @@ struct DetalleView: View {
                     VStack(alignment: .leading, spacing: 14) {
                         Text(item.name)
                             .font(WDLFont.display(30, weight: .bold))
-                            .foregroundStyle(Color.wdlForest)
+                            .foregroundStyle(Color.wdlDeepPurple)
 
                         Text(item.subtitle)
                             .font(WDLFont.sans(15))
@@ -38,7 +38,7 @@ struct DetalleView: View {
     private var hero: some View {
         ZStack {
             LinearGradient(
-                colors: [.wdlGrass, .wdlForest],
+                colors: [.wdlPurple, .wdlDeepPurple],
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
@@ -48,7 +48,7 @@ struct DetalleView: View {
                 .scaledToFill()
                 .frame(height: 220)
                 .clipped()
-                .overlay(Color.wdlForest.opacity(0.35))
+                .overlay(Color.wdlDeepPurple.opacity(0.35))
         }
         .frame(height: 220)
         .frame(maxWidth: .infinity)
@@ -75,7 +75,7 @@ struct DetalleView: View {
 
             Text(value)
                 .font(WDLFont.sans(15, weight: .semibold))
-                .foregroundStyle(Color.wdlForest)
+                .foregroundStyle(Color.wdlDeepPurple)
         }
         .padding(.vertical, 11)
         .overlay(alignment: .bottom) {

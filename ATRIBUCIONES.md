@@ -1,5 +1,16 @@
 # Atribuciones de las fotografías de los tenistas
 
+## Logotipo de Wimbledon
+
+El escudo del splash (`LogoWimbledon.imageset`) es el logo oficial de Wimbledon, tomado de
+`https://www.wimbledon.com/_next/static/media/Logo-Wimbledon.2wyelfplbl7j4.svg`. Se usó sin
+modificaciones, con los colores originales del archivo (morado `#54008b`, verde `#063` y blanco).
+
+Logotipo de Wimbledon © The All England Lawn Tennis and Croquet Club. Se usa con fines
+académicos y no implica endorsements ni afiliación oficial con el torneo.
+
+## Fotografías de los tenistas
+
 Las imágenes de los jugadores provienen de Wikimedia Commons y están bajo licencias libres.
 Fueron recortadas a formato cuadrado (512x512 px) para usarse como avatares dentro de la app.
 

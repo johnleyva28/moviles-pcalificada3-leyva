@@ -12,7 +12,13 @@ extension Color {
         )
     }
 
-    // Verdes: la identidad de Wimbledon es verde (cancha y césped).
+    // Morado: es el color del escudo oficial de Wimbledon (Logo-Wimbledon.svg).
+    static let wdlPurple = Color(hex: 0x54008B)
+    static let wdlPurpleHover = Color(hex: 0x6A1FA3)
+    static let wdlDeepPurple = Color(hex: 0x240330)
+    static let wdlPurpleSoft = Color(hex: 0xEDE7FF)
+
+    // Verdes: la cancha y el césped de Wimbledon.
     static let wdlGreen = Color(hex: 0x046633)          // --wdl-button-primary
     static let wdlGreenHover = Color(hex: 0x00552B)
     static let wdlGreenActive = Color(hex: 0x00331A)
@@ -28,9 +34,7 @@ extension Color {
     static let wdlLimeSoft = Color(hex: 0xCAE86B)        // --wdl-highlight-brand-07
     static let wdlLime = Color(hex: 0xF3FF00)            // --wdl-highlight-brand-06
 
-    // Acentos (usados con sparingly)
-    static let wdlPurple = Color(hex: 0x540082)          // --wdl-background-brand-02
-    static let wdlDeepPurple = Color(hex: 0x240330)
+    // Acentos
     static let wdlGold = Color(hex: 0x816C3C)            // --wdl-background-brand-03
     static let wdlGoldBorder = Color(hex: 0x9B8148)
     static let wdlTennis = Color(hex: 0xC4D600)          // verde limón de la pelota
