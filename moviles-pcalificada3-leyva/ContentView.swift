@@ -1,22 +1,26 @@
-//
-//  ContentView.swift
-//  moviles-pcalificada3-leyva
-//
-//  Created by Alumno Tecsup on 5/11/26.
-//
-
 import SwiftUI
 
 struct ContentView: View {
+    // La navegación del Splash es un valor simple sin dependencias externas:
+    // @State es suficiente (y más barato) que @StateObject.
+    @State private var route: Route = .splash
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        switch route {
+        case .splash:
+            SplashView { route = .login }
+                .transition(.opacity)
+        case .login:
+            LoginView()
+                .transition(.opacity)
         }
-        .padding()
+        .animation(.easeInOut(duration: 0.4), value: route)
     }
+}
+
+enum Route: Equatable {
+    case splash
+    case login
 }
 
 #Preview {
