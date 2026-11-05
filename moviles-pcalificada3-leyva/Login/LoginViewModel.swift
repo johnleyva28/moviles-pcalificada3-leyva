@@ -18,16 +18,13 @@ final class LoginViewModel: ObservableObject {
     var isEmailValid: Bool { Self.isValidEmail(email) }
     var isPasswordValid: Bool { Self.isValidPassword(password) }
 
-    /// - Returns: `true` si la autenticación fue exitosa.
+    /// - Returns: `true` si los datos son válidos y la sesión quedó guardada.
     func login(using session: SessionStore) -> Bool {
         hasAttemptedLogin = true
         revalidate()
-        if errorMessage != nil { return false }
+        guard errorMessage == nil else { return false }
 
-        if let error = session.authenticate(email: email, password: password) {
-            errorMessage = error
-            return false
-        }
+        session.authenticate(email: email, password: password)
         return true
     }
 

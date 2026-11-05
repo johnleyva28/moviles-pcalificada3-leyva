@@ -22,21 +22,15 @@ final class SessionStore: ObservableObject {
         registeredUsers.append(User(name: name, email: email, password: password))
     }
 
-    /// - Returns: mensaje de error, o `nil` si la autenticación fue exitosa.
-    func authenticate(email: String, password: String) -> String? {
-        guard !registeredUsers.isEmpty else {
-            // Aún no hay cuentas creadas: el login solo valida formato (parte 2 de la evaluación).
+    /// Valida el formato (lo hace el ViewModel) y guarda la sesión en memoria.
+    /// Si el correo corresponde a una cuenta registrada se usa ese usuario;
+    /// si no, se crea una sesión temporal con los datos ingresados.
+    func authenticate(email: String, password: String) {
+        if let match = registeredUsers.first(where: { $0.email.lowercased() == email.lowercased() }) {
+            currentUser = match
+        } else {
             currentUser = User(name: Self.name(from: email), email: email, password: password)
-            return nil
         }
-        guard let match = registeredUsers.first(where: { $0.email.lowercased() == email.lowercased() }) else {
-            return "No existe una cuenta con ese correo."
-        }
-        guard match.password == password else {
-            return "La contraseña es incorrecta."
-        }
-        currentUser = match
-        return nil
     }
 
     func logout() {

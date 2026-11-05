@@ -18,8 +18,11 @@ struct ContentView: View {
                 )
                 .transition(.opacity)
             } else if route == .registro {
-                RegistroView(onBack: { route = .login })
-                    .transition(.opacity)
+                RegistroView(
+                    onBack: { route = .login },
+                    onRegistered: { route = .home }
+                )
+                .transition(.opacity)
             } else {
                 HomeView(onLogout: {
                     session.logout()
