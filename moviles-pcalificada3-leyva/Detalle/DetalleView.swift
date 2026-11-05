@@ -43,9 +43,12 @@ struct DetalleView: View {
                 endPoint: .bottomTrailing
             )
 
-            Image(systemName: item.symbol)
-                .font(.system(size: 76, weight: .semibold))
-                .foregroundStyle(Color.wdlLime)
+            Image(item.imageName)
+                .resizable()
+                .scaledToFill()
+                .frame(height: 220)
+                .clipped()
+                .overlay(Color.wdlForest.opacity(0.35))
         }
         .frame(height: 220)
         .frame(maxWidth: .infinity)

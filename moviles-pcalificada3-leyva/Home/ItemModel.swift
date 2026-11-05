@@ -5,6 +5,7 @@ struct ItemModel: Identifiable, Hashable {
     var name: String
     var subtitle: String
     var symbol: String
+    var imageName: String
     var ranking: Int
     var grandSlamTitles: Int
     var country: String

@@ -4,8 +4,6 @@ struct HomeView: View {
     @EnvironmentObject private var session: SessionStore
     @StateObject private var viewModel = HomeViewModel()
 
-    let onLogout: () -> Void
-
     var body: some View {
         NavigationStack {
             ZStack {
@@ -14,6 +12,8 @@ struct HomeView: View {
                 ScrollView {
                     LazyVStack(spacing: 12) {
                         header
+
+                        insights
 
                         if viewModel.filteredItems.isEmpty {
                             VStack(spacing: 8) {
@@ -47,18 +47,6 @@ struct HomeView: View {
             .navigationDestination(for: ItemModel.self) { item in
                 DetalleView(item: item)
             }
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        session.logout()
-                        onLogout()
-                    } label: {
-                        Image(systemName: "rectangle.portrait.and.arrow.right")
-                            .foregroundStyle(Color.wdlGreen)
-                    }
-                    .accessibilityLabel("Cerrar sesión")
-                }
-            }
         }
     }
 
@@ -81,6 +69,45 @@ struct HomeView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.top, 8)
+    }
+
+    private var insights: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 10) {
+                ForEach(HomeViewModel.insights) { insight in
+                    insightCard(insight)
+                }
+            }
+            .padding(.vertical, 4)
+        }
+    }
+
+    private func insightCard(_ insight: Insight) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Image(systemName: insight.icon)
+                .font(.system(size: 16, weight: .semibold))
+                .foregroundStyle(Color.wdlGreen)
+
+            Text(insight.value)
+                .font(WDLFont.display(20, weight: .bold))
+                .foregroundStyle(Color.wdlForest)
+
+            Text(insight.title)
+                .font(WDLFont.sans(12, weight: .semibold))
+                .foregroundStyle(Color.wdlGreen)
+
+            Text(insight.detail)
+                .font(WDLFont.sans(11))
+                .foregroundStyle(Color.wdlInkSecondary)
+                .lineLimit(2)
+        }
+        .frame(width: 148, alignment: .leading)
+        .padding(14)
+        .background(.white, in: RoundedRectangle(cornerRadius: 14))
+        .overlay {
+            RoundedRectangle(cornerRadius: 14)
+                .strokeBorder(Color.wdlBorder, lineWidth: 1)
+        }
     }
 
     private var searchBar: some View {
@@ -114,14 +141,7 @@ struct HomeView: View {
 
     private func row(_ item: ItemModel) -> some View {
         HStack(spacing: 14) {
-            ZStack {
-                Circle()
-                    .fill(Color.wdlGrass)
-                Image(systemName: item.symbol)
-                    .font(.system(size: 20, weight: .semibold))
-                    .foregroundStyle(Color.wdlMint)
-            }
-            .frame(width: 52, height: 52)
+            avatar(item)
 
             VStack(alignment: .leading, spacing: 3) {
                 Text(item.name)
@@ -155,9 +175,25 @@ struct HomeView: View {
                 .strokeBorder(Color.wdlBorder, lineWidth: 1)
         }
     }
+
+    private func avatar(_ item: ItemModel) -> some View {
+        ZStack {
+            Circle()
+                .fill(Color.wdlGrass)
+            Image(item.imageName)
+                .resizable()
+                .scaledToFill()
+                .frame(width: 52, height: 52)
+                .clipShape(Circle())
+        }
+        .frame(width: 52, height: 52)
+        .overlay {
+            Circle().strokeBorder(Color.wdlMint, lineWidth: 2)
+        }
+    }
 }
 
 #Preview {
-    HomeView(onLogout: {})
+    HomeView()
         .environmentObject(SessionStore())
 }

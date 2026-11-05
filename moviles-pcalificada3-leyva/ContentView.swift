@@ -24,11 +24,34 @@ struct ContentView: View {
                 )
                 .transition(.opacity)
             } else {
-                HomeView(onLogout: { route = .login })
-                    .transition(.opacity)
+                MainTabView(onLogout: {
+                    session.logout()
+                    route = .login
+                })
+                .transition(.opacity)
             }
         }
         .animation(.easeInOut(duration: 0.4), value: route)
+    }
+}
+
+/// Menú inferior con las secciones de la app.
+struct MainTabView: View {
+    let onLogout: () -> Void
+
+    var body: some View {
+        TabView {
+            HomeView()
+                .tabItem {
+                    Label("Inicio", systemImage: "list.bullet.rectangle")
+                }
+
+            PerfilView(onLogout: onLogout)
+                .tabItem {
+                    Label("Perfil", systemImage: "person.crop.circle")
+                }
+        }
+        .tint(Color.wdlGreen)
     }
 }
 

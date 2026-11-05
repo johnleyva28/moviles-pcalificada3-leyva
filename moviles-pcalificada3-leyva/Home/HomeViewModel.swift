@@ -27,11 +27,33 @@ final class HomeViewModel: ObservableObject {
         }
     }
 
+    /// Tarjetas de resumen que se muestran arriba de la lista.
+    nonisolated static let insights: [Insight] = [
+        Insight(
+            icon: "calendar",
+            value: "01 Jul",
+            title: "Inicio de Wimbledon",
+            detail: "Primera ronda en el All England Club"
+        ),
+        Insight(
+            icon: "person.3.fill",
+            value: "128",
+            title: "Tenistas en cuadro",
+            detail: "64 EMTs · 64 damas"
+        ),
+        Insight(
+            icon: "leaf.fill",
+            value: "Césped",
+            title: "Superficie",
+            detail: "Grass, 78 m por 23.77 m"
+        )
+    ]
+
     nonisolated static let sampleItems: [ItemModel] = [
         ItemModel(
             name: "Carlos Alcaraz",
             subtitle: "España · Tenista",
-            symbol: "crown.fill",
+            imageName: "JugadorAlcaraz",
             ranking: 1,
             grandSlamTitles: 4,
             country: "España",
@@ -42,7 +64,7 @@ final class HomeViewModel: ObservableObject {
         ItemModel(
             name: "Jannik Sinner",
             subtitle: "Italia · Tenista",
-            symbol: "bolt.fill",
+            imageName: "JugadorSinner",
             ranking: 2,
             grandSlamTitles: 1,
             country: "Italia",
@@ -53,7 +75,7 @@ final class HomeViewModel: ObservableObject {
         ItemModel(
             name: "Novak Djokovic",
             subtitle: "Serbia · Tenista",
-            symbol: "flame.fill",
+            imageName: "JugadorDjokovic",
             ranking: 3,
             grandSlamTitles: 24,
             country: "Serbia",
@@ -64,7 +86,7 @@ final class HomeViewModel: ObservableObject {
         ItemModel(
             name: "Iga Świątek",
             subtitle: "Polonia · Tenista",
-            symbol: "star.fill",
+            imageName: "JugadorSwiatek",
             ranking: 1,
             grandSlamTitles: 5,
             country: "Polonia",
@@ -75,7 +97,7 @@ final class HomeViewModel: ObservableObject {
         ItemModel(
             name: "Aryna Sabalenka",
             subtitle: "Bielorrusia · Tenista",
-            symbol: "trophy.fill",
+            imageName: "JugadorSabalenka",
             ranking: 2,
             grandSlamTitles: 3,
             country: "Bielorrusia",
@@ -86,7 +108,7 @@ final class HomeViewModel: ObservableObject {
         ItemModel(
             name: "Coco Gauff",
             subtitle: "Estados Unidos · Tenista",
-            symbol: "leaf.fill",
+            imageName: "JugadorGauff",
             ranking: 3,
             grandSlamTitles: 1,
             country: "Estados Unidos",
@@ -97,7 +119,7 @@ final class HomeViewModel: ObservableObject {
         ItemModel(
             name: "Alexander Zverev",
             subtitle: "Alemania · Tenista",
-            symbol: "globe.americas.fill",
+            imageName: "JugadorZverev",
             ranking: 4,
             grandSlamTitles: 0,
             country: "Alemania",
@@ -108,7 +130,7 @@ final class HomeViewModel: ObservableObject {
         ItemModel(
             name: "Jasmine Paolini",
             subtitle: "Italia · Tenista",
-            symbol: "medal.fill",
+            imageName: "JugadorPaolini",
             ranking: 5,
             grandSlamTitles: 1,
             country: "Italia",
@@ -119,7 +141,7 @@ final class HomeViewModel: ObservableObject {
         ItemModel(
             name: "Andrey Rublev",
             subtitle: "Rusia · Tenista",
-            symbol: "chart.bar.fill",
+            imageName: "JugadorRublev",
             ranking: 6,
             grandSlamTitles: 0,
             country: "Rusia",
@@ -130,7 +152,7 @@ final class HomeViewModel: ObservableObject {
         ItemModel(
             name: "Mirra Andreeva",
             subtitle: "Rusia · Tenista",
-            symbol: "sparkles",
+            imageName: "JugadorAndreeva",
             ranking: 7,
             grandSlamTitles: 0,
             country: "Rusia",
@@ -139,4 +161,12 @@ final class HomeViewModel: ObservableObject {
             surface: "Césped"
         )
     ]
+}
+
+struct Insight: Identifiable, Sendable {
+    let id = UUID()
+    var icon: String
+    var value: String
+    var title: String
+    var detail: String
 }
