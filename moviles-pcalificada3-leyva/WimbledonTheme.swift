@@ -12,19 +12,28 @@ extension Color {
         )
     }
 
-    // Marca
-    static let wdlGreen = Color(hex: 0x006633)          // --wdl-button-primary
+    // Verdes: la identidad de Wimbledon es verde (cancha y césped).
+    static let wdlGreen = Color(hex: 0x046633)          // --wdl-button-primary
     static let wdlGreenHover = Color(hex: 0x00552B)
     static let wdlGreenActive = Color(hex: 0x00331A)
+    static let wdlGrass = Color(hex: 0x0E6027)           // verde césped
+    static let wdlCourt = Color(hex: 0x11742F)           // verde de la cancha
     static let wdlDeepGreen = Color(hex: 0x042)
+    static let wdlForest = Color(hex: 0x0B2917)
+    static let wdlBrightGreen = Color(hex: 0x22B263)     // --wdl-highlight-brand-03
+    static let wdlSuccess = Color(hex: 0x198038)
+    static let wdlSuccessBright = Color(hex: 0x42BE65)
+    static let wdlMint = Color(hex: 0xD3F0E0)            // --wdl-layer-highlight
+    static let wdlMintSoft = Color(hex: 0xE3FFF2)
+    static let wdlLimeSoft = Color(hex: 0xCAE86B)        // --wdl-highlight-brand-07
+    static let wdlLime = Color(hex: 0xF3FF00)            // --wdl-highlight-brand-06
+
+    // Acentos (usados con sparingly)
     static let wdlPurple = Color(hex: 0x540082)          // --wdl-background-brand-02
     static let wdlDeepPurple = Color(hex: 0x240330)
     static let wdlGold = Color(hex: 0x816C3C)            // --wdl-background-brand-03
     static let wdlGoldBorder = Color(hex: 0x9B8148)
-    static let wdlLime = Color(hex: 0xF3FF00)            // --wdl-highlight-brand-06
-    static let wdlLimeSoft = Color(hex: 0xCAE86B)        // --wdl-highlight-brand-07
-    static let wdlMint = Color(hex: 0xD3F0E0)            // --wdl-layer-highlight
-    static let wdlLavender = Color(hex: 0xEDE7FF)
+    static let wdlTennis = Color(hex: 0xC4D600)          // verde limón de la pelota
 
     // Neutros
     static let wdlSurface = Color(hex: 0xF2F4F8)
@@ -35,7 +44,6 @@ extension Color {
     // Semánticos
     static let wdlError = Color(hex: 0xDA1E28)
     static let wdlWarning = Color(hex: 0xF1C21B)
-    static let wdlSuccess = Color(hex: 0x198038)
 }
 
 // Wimbledon usa Gotham (sans) y Adobe Caslon Pro (serif). Ninguna es licenciable para iOS,

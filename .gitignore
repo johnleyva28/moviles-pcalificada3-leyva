@@ -58,3 +58,8 @@ Icon?
 .env
 .env.local
 secrets.xcconfig
+
+# Herramientas locales
+.remember/
+.claude/
+CLAUDE.md
