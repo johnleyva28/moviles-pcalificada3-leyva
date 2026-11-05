@@ -24,11 +24,8 @@ struct ContentView: View {
                 )
                 .transition(.opacity)
             } else {
-                HomeView(onLogout: {
-                    session.logout()
-                    route = .login
-                })
-                .transition(.opacity)
+                HomeView(onLogout: { route = .login })
+                    .transition(.opacity)
             }
         }
         .animation(.easeInOut(duration: 0.4), value: route)

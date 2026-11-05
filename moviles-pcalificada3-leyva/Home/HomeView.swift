@@ -49,7 +49,10 @@ struct HomeView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button(action: onLogout) {
+                    Button {
+                        session.logout()
+                        onLogout()
+                    } label: {
                         Image(systemName: "rectangle.portrait.and.arrow.right")
                             .foregroundStyle(Color.wdlGreen)
                     }

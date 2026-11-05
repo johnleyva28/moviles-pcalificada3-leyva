@@ -3,7 +3,7 @@ import Foundation
 
 @MainActor
 final class HomeViewModel: ObservableObject {
-    @Published private(set) var items: [ItemModel] = HomeViewModel.sampleItems
+    @Published var items: [ItemModel] = HomeViewModel.sampleItems
     @Published private(set) var filteredItems: [ItemModel] = HomeViewModel.sampleItems
     @Published var searchText = "" {
         didSet { applyFilter() }
@@ -27,7 +27,7 @@ final class HomeViewModel: ObservableObject {
         }
     }
 
-    static let sampleItems: [ItemModel] = [
+    nonisolated static let sampleItems: [ItemModel] = [
         ItemModel(
             name: "Carlos Alcaraz",
             subtitle: "España · Tenista",
