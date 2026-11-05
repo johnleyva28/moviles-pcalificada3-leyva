@@ -6,6 +6,7 @@ struct RegistroView: View {
 
     @State private var showsPassword = false
     @State private var showsConfirmPassword = false
+    @State private var toast: Toast?
 
     let onBack: () -> Void
     let onRegistered: () -> Void
@@ -68,28 +69,15 @@ struct RegistroView: View {
                                 reveal: $showsConfirmPassword
                             )
 
-                            if let error = viewModel.errorMessage {
-                                Label(error, systemImage: "exclamationmark.triangle.fill")
-                                    .font(WDLFont.sans(13, weight: .medium))
-                                    .foregroundStyle(Color.wdlError)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .transition(.opacity.combined(with: .move(edge: .top)))
-                            }
-
-                            if viewModel.isRegistered {
-                                Label("Cuenta creada", systemImage: "checkmark.seal.fill")
-                                    .font(WDLFont.sans(14, weight: .semibold))
-                                    .foregroundStyle(Color.wdlSuccess)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .transition(.opacity.combined(with: .move(edge: .top)))
-                            }
-
                             Button {
                                 if viewModel.register(using: session) {
+                                    show(Toast(message: "Cuenta creada", kind: .success))
                                     Task {
-                                        try? await Task.sleep(for: .seconds(1))
+                                        try? await Task.sleep(for: .seconds(1.5))
                                         onRegistered()
                                     }
+                                } else if let error = viewModel.errorMessage {
+                                    show(Toast(message: error, kind: .error))
                                 }
                             } label: {
                                 Text("Crear cuenta")
@@ -119,8 +107,17 @@ struct RegistroView: View {
                 .scrollDismissesKeyboard(.interactively)
             }
         }
+        .toast(toast)
         .animation(.easeInOut(duration: 0.25), value: viewModel.errorMessage)
-        .animation(.easeInOut(duration: 0.25), value: viewModel.isRegistered)
+    }
+
+    /// Muestra el toast y lo descarta solo a los 3 segundos.
+    private func show(_ newToast: Toast) {
+        toast = newToast
+        Task {
+            try? await Task.sleep(for: .seconds(3))
+            withAnimation { toast = nil }
+        }
     }
 
     private func field(

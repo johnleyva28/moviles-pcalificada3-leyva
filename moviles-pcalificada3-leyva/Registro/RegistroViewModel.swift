@@ -8,7 +8,6 @@ final class RegistroViewModel: ObservableObject {
     @Published var password = "" { didSet { revalidate() } }
     @Published var confirmPassword = "" { didSet { revalidate() } }
     @Published private(set) var errorMessage: String?
-    @Published private(set) var isRegistered = false
 
     private var hasAttempted = false
 
@@ -25,7 +24,6 @@ final class RegistroViewModel: ObservableObject {
     /// - Returns: `true` si la cuenta se creó y el usuario quedó autenticado.
     func register(using session: SessionStore) -> Bool {
         hasAttempted = true
-        isRegistered = false
         revalidate()
         if errorMessage != nil { return false }
 
@@ -40,13 +38,11 @@ final class RegistroViewModel: ObservableObject {
             password: password
         )
         session.currentUser = session.registeredUsers.last
-        isRegistered = true
         return true
     }
 
     /// El error se recalcula en cada cambio de campo, así desaparece solo al corregir.
     private func revalidate() {
-        isRegistered = false
         errorMessage = hasAttempted ? Self.validate(
             name: name,
             email: email,

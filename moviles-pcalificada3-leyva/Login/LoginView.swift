@@ -5,6 +5,7 @@ struct LoginView: View {
     @StateObject private var viewModel = LoginViewModel()
 
     @State private var showsPassword = false
+    @State private var toast: Toast?
 
     let onRegister: () -> Void
     let onSuccess: () -> Void
@@ -50,17 +51,11 @@ struct LoginView: View {
                                 reveal: $showsPassword
                             )
 
-                            if let error = viewModel.errorMessage {
-                                Label(error, systemImage: "exclamationmark.triangle.fill")
-                                    .font(WDLFont.sans(13, weight: .medium))
-                                    .foregroundStyle(Color.wdlError)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .transition(.opacity.combined(with: .move(edge: .top)))
-                            }
-
                             Button {
                                 if viewModel.login(using: session) {
                                     onSuccess()
+                                } else if let error = viewModel.errorMessage {
+                                    show(Toast(message: error, kind: .error))
                                 }
                             } label: {
                                 Text("Iniciar sesión")
@@ -90,7 +85,17 @@ struct LoginView: View {
                 .scrollDismissesKeyboard(.interactively)
             }
         }
+        .toast(toast)
         .animation(.easeInOut(duration: 0.25), value: viewModel.errorMessage)
+    }
+
+    /// Muestra el toast y lo descarta solo a los 3 segundos.
+    private func show(_ newToast: Toast) {
+        toast = newToast
+        Task {
+            try? await Task.sleep(for: .seconds(3))
+            withAnimation { toast = nil }
+        }
     }
 
     private func field(
