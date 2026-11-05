@@ -1,6 +1,6 @@
 # `moviles-pcalificada3-leyva`
 
-**Evaluación 03** — Desarrollo de Aplicaciones en IOS · TECSUP · Ciclo V · 2026-II
+**Evaluación 03** — Programación en Móviles Avanzado · TECSUP · Ciclo V · 2026-II
 
 [![Repo](https://img.shields.io/badge/GitHub-repo-181717?logo=github&logoColor=white)](https://github.com/johnleyva28/moviles-pcalificada3-leyva) [![Swift](https://img.shields.io/badge/Swift-5.0-339933?logo=swift&logoColor=white)](https://swift.org) [![SwiftUI](https://img.shields.io/badge/SwiftUI-iOS%2026-0f9dbf?logo=swift&logoColor=white)](https://developer.apple.com/swiftui/) [![License](https://img.shields.io/badge/License-Academic-blue)](#-licencia)
 
@@ -8,7 +8,7 @@
 
 ## 📋 Sobre este repositorio
 
-Este repositorio contiene la solución completa de la **Evaluación 03** del curso *Desarrollo de Aplicaciones en IOS* de TECSUP. La evaluación propone **cuatro aplicaciones** y se opta por la **opción 4: una app del torneo de Wimbledon (tenis)**. Consta de **cinco pantallas** que suman 20 puntos, cada una con su pregunta analítica.
+Este repositorio contiene la solución completa de la **Evaluación 03** del curso *Programación en Móviles Avanzado* de TECSUP. La evaluación propone **cuatro aplicaciones** y se opta por la **opción 4: una app del torneo de Wimbledon (tenis)**. Consta de **cinco pantallas** que suman 20 puntos, cada una con su pregunta analítica.
 
 | # | Pantalla            | Tema                                          | Puntaje | Carpeta                    |
 |---|---------------------|-----------------------------------------------|--------:|----------------------------|
@@ -75,7 +75,7 @@ moviles-pcalificada3-leyva/
         ├── LogoWimbledon.imageset          (escudo oficial en SVG)
         ├── Jugador*.imageset               (10 avatares de tenistas)
         ├── AccentColor.colorset            (morado de marca)
-        └── AppIcon.appiconset
+        └── AppIcon.appiconset              (icono 1024×1024 con el escudo)
 ```
 
 ---
@@ -231,4 +231,4 @@ Cambiaría la decisión cuando el elemento sea una entidad viva que puede mutar 
 
 ## 🪪 Licencia
 
-Material académico del curso *Desarrollo de Aplicaciones en IOS* de TECSUP. Uso educativo.
+Material académico del curso *Programación en Móviles Avanzado* de TECSUP. Uso educativo.

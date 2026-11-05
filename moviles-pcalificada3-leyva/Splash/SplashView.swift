@@ -7,22 +7,21 @@ struct SplashView: View {
 
     var body: some View {
         ZStack {
-            // Verde profundo plano, como la portada del programa oficial.
-            Color.wdlDeepGreen.ignoresSafeArea()
+            // Mismo degradado que Login y Registro.
+            LinearGradient(
+                colors: [.wdlCourt, .wdlDeepPurple],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea()
 
             VStack(spacing: WDLSpace.l) {
-                ZStack {
-                    Circle()
-                        .fill(Color.wdlPaper)
-
-                    Image("LogoWimbledon")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 176, height: 176)
-                }
-                .frame(width: 190, height: 190)
-                .scaleEffect(appeared ? 1 : 0.6)
-                .opacity(appeared ? 1 : 0)
+                Image("LogoWimbledon")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 210, height: 210)
+                    .scaleEffect(appeared ? 1 : 0.65)
+                    .opacity(appeared ? 1 : 0)
 
                 VStack(spacing: WDLSpace.xs) {
                     // Nombre de la app con fuente personalizada (requisito del criterio).
