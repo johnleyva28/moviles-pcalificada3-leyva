@@ -8,29 +8,29 @@ struct PerfilView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color.wdlMintSoft.ignoresSafeArea()
+                Color.wdlMint.ignoresSafeArea()
 
                 ScrollView {
-                    VStack(spacing: 18) {
+                    VStack(spacing: WDLSpace.l) {
                         card
 
                         Button(action: onLogout) {
-                            HStack(spacing: 10) {
+                            HStack(spacing: WDLSpace.s) {
                                 Image(systemName: "rectangle.portrait.and.arrow.right")
                                 Text("Cerrar sesión")
                             }
-                            .font(WDLFont.sans(16, weight: .semibold))
-                            .foregroundStyle(.white)
+                            .font(WDLType.subhead)
+                            .foregroundStyle(Color.wdlPaper)
                             .frame(maxWidth: .infinity)
-                            .padding(.vertical, 15)
-                            .background(Color.wdlGreen, in: RoundedRectangle(cornerRadius: 12))
+                            .padding(.vertical, WDLSpace.m)
+                            .background(Color.wdlGreen, in: RoundedRectangle(cornerRadius: WDLRadius.control))
                         }
 
                         Text("Wimbledon · The Championships")
-                            .font(WDLFont.sans(12))
+                            .font(WDLType.caption)
                             .foregroundStyle(Color.wdlInkSecondary)
                     }
-                    .padding(20)
+                    .padding(WDLSpace.l)
                     .frame(maxWidth: .infinity)
                 }
             }
@@ -40,49 +40,59 @@ struct PerfilView: View {
     }
 
     private var card: some View {
-        VStack(spacing: 14) {
+        VStack(spacing: WDLSpace.m) {
             ZStack {
                 Circle()
                     .fill(Color.wdlGrass)
                 Image(systemName: "person.fill")
-                    .font(.system(size: 42, weight: .semibold))
+                    .font(.system(size: 38, weight: .semibold))
                     .foregroundStyle(Color.wdlMint)
             }
-            .frame(width: 92, height: 92)
+            .frame(width: 84, height: 84)
 
-            Text(session.currentUser?.name ?? "Usuario")
-                .font(WDLFont.display(24, weight: .bold))
-                .foregroundStyle(Color.wdlDeepPurple)
+            VStack(spacing: 2) {
+                Text(session.currentUser?.name ?? "Usuario")
+                    .font(WDLType.title)
+                    .foregroundStyle(Color.wdlDeepPurple)
 
-            Text(session.currentUser?.email ?? "sin correo")
-                .font(WDLFont.sans(14))
-                .foregroundStyle(Color.wdlInkSecondary)
+                Text(session.currentUser?.email ?? "sin correo")
+                    .font(WDLType.body)
+                    .foregroundStyle(Color.wdlInkSecondary)
+            }
 
             HStack(spacing: 0) {
                 stat(value: "\(session.registeredUsers.count)", label: "Cuentas")
-                Divider().frame(height: 34).overlay(Color.wdlBorder)
+                divider
                 stat(value: "\(HomeViewModel.sampleItems.count)", label: "Jugadores")
-                Divider().frame(height: 34).overlay(Color.wdlBorder)
+                divider
                 stat(value: "128", label: "En cuadro")
             }
-            .padding(.top, 6)
+            .padding(.top, WDLSpace.s)
         }
         .frame(maxWidth: .infinity)
-        .padding(20)
-        .background(.white, in: RoundedRectangle(cornerRadius: 16))
+        .padding(WDLSpace.l)
+        .background(Color.wdlPaper, in: RoundedRectangle(cornerRadius: WDLRadius.container))
         .overlay {
-            RoundedRectangle(cornerRadius: 16)
+            RoundedRectangle(cornerRadius: WDLRadius.container)
                 .strokeBorder(Color.wdlBorder, lineWidth: 1)
         }
     }
 
+    private var divider: some View {
+        Rectangle()
+            .fill(Color.wdlHairline)
+            .frame(width: 1, height: 30)
+    }
+
     private func stat(value: String, label: String) -> some View {
-        VStack(spacing: 3) {
+        VStack(spacing: 2) {
             Text(value)
-                .font(WDLFont.display(20, weight: .bold))
+                .font(WDLFont.display(17, weight: .bold))
+                .monospacedDigit()
                 .foregroundStyle(Color.wdlGreen)
+
             Text(label)
-                .font(WDLFont.sans(11))
+                .font(WDLType.caption)
                 .foregroundStyle(Color.wdlInkSecondary)
         }
         .frame(maxWidth: .infinity)

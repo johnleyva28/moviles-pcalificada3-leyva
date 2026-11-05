@@ -7,25 +7,13 @@ struct SplashView: View {
 
     var body: some View {
         ZStack {
-            // Verde de cancha y morado del escudo: los dos colores de marca.
-            LinearGradient(
-                colors: [.wdlCourt, .wdlDeepPurple],
-                startPoint: .top,
-                endPoint: .bottom
-            )
-            .ignoresSafeArea()
+            // Verde profundo plano, como la portada del programa oficial.
+            Color.wdlDeepGreen.ignoresSafeArea()
 
-            Circle()
-                .fill(Color.wdlLime.opacity(0.10))
-                .frame(width: 320, height: 320)
-                .blur(radius: 60)
-                .offset(y: -110)
-
-            VStack(spacing: 26) {
+            VStack(spacing: WDLSpace.l) {
                 ZStack {
-                    // Disco blanco: el escudo es morado y necesita contraste.
                     Circle()
-                        .fill(.white)
+                        .fill(Color.wdlPaper)
 
                     Image("LogoWimbledon")
                         .resizable()
@@ -36,11 +24,26 @@ struct SplashView: View {
                 .scaleEffect(appeared ? 1 : 0.6)
                 .opacity(appeared ? 1 : 0)
 
-                Text("THE CHAMPIONSHIPS")
-                    .font(WDLFont.sans(12, weight: .medium))
-                    .tracking(3.5)
-                    .foregroundStyle(Color.wdlLime)
+                VStack(spacing: WDLSpace.xs) {
+                    // Nombre de la app con fuente personalizada (requisito del criterio).
+                    Text("WIMBLEDON")
+                        .font(WDLFont.display(40, weight: .bold))
+                        .tracking(5)
+                        .foregroundStyle(Color.wdlPaper)
+
+                    Rectangle()
+                        .fill(Color.wdlLime)
+                        .frame(width: 44, height: 2)
+
+                    Text("THE CHAMPIONSHIPS")
+                        .font(WDLType.caption)
+                        .tracking(3)
+                        .foregroundStyle(Color.wdlLime)
+                }
+                .opacity(appeared ? 1 : 0)
+                .offset(y: appeared ? 0 : 20)
             }
+            .padding(.horizontal, WDLSpace.xl)
         }
         .onAppear {
             withAnimation(.spring(response: 0.7, dampingFraction: 0.7)) {

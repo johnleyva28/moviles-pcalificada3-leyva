@@ -7,39 +7,21 @@ struct HomeView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color.wdlMintSoft.ignoresSafeArea()
+                Color.wdlMint.ignoresSafeArea()
 
                 ScrollView {
-                    LazyVStack(spacing: 12) {
+                    VStack(spacing: WDLSpace.l) {
                         header
-
-                        insights
+                        statsBand
 
                         if viewModel.filteredItems.isEmpty {
-                            VStack(spacing: 8) {
-                                Image(systemName: "magnifyingglass")
-                                    .font(.system(size: 34))
-                                    .foregroundStyle(Color.wdlGreen)
-                                Text("Sin resultados")
-                                    .font(WDLFont.display(20, weight: .semibold))
-                                    .foregroundStyle(Color.wdlGreen)
-                                Text("No hay tenistas que coincidan con «\(viewModel.searchText)»")
-                                    .font(WDLFont.sans(13))
-                                    .foregroundStyle(Color.wdlInkSecondary)
-                                    .multilineTextAlignment(.center)
-                            }
-                            .padding(.vertical, 48)
+                            emptyState
                         } else {
-                            ForEach(viewModel.filteredItems) { item in
-                                NavigationLink(value: item) {
-                                    row(item)
-                                }
-                                .buttonStyle(.plain)
-                            }
+                            playerList
                         }
                     }
-                    .padding(.horizontal, 16)
-                    .padding(.bottom, 24)
+                    .padding(.horizontal, WDLSpace.l)
+                    .padding(.bottom, WDLSpace.xl)
                 }
             }
             .navigationTitle("Wimbledon")
@@ -50,75 +32,38 @@ struct HomeView: View {
         }
     }
 
+    // MARK: - Encabezado
+
     private var header: some View {
-        VStack(alignment: .leading, spacing: 6) {
+        VStack(alignment: .leading, spacing: WDLSpace.s) {
             Text("THE CHAMPIONSHIPS")
-                .font(WDLFont.sans(11, weight: .medium))
+                .font(WDLType.caption)
                 .tracking(3)
                 .foregroundStyle(Color.wdlGreen)
 
             Text("Las leyendas del tenis")
-                .font(WDLFont.display(28, weight: .bold))
+                .font(WDLType.display)
                 .foregroundStyle(Color.wdlDeepPurple)
 
             Text(session.currentUser.map { "Hola, \($0.name)" } ?? "Bienvenido")
-                .font(WDLFont.sans(14))
+                .font(WDLType.body)
                 .foregroundStyle(Color.wdlInkSecondary)
 
             searchBar
+                .padding(.top, WDLSpace.xs)
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.top, 8)
-    }
-
-    private var insights: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 10) {
-                ForEach(HomeViewModel.insights) { insight in
-                    insightCard(insight)
-                }
-            }
-            .padding(.vertical, 4)
-        }
-    }
-
-    private func insightCard(_ insight: Insight) -> some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Image(systemName: insight.icon)
-                .font(.system(size: 16, weight: .semibold))
-                .foregroundStyle(Color.wdlGreen)
-
-            Text(insight.value)
-                .font(WDLFont.display(20, weight: .bold))
-                .foregroundStyle(Color.wdlDeepPurple)
-
-            Text(insight.title)
-                .font(WDLFont.sans(12, weight: .semibold))
-                .foregroundStyle(Color.wdlGreen)
-
-            Text(insight.detail)
-                .font(WDLFont.sans(11))
-                .foregroundStyle(Color.wdlInkSecondary)
-                .lineLimit(2)
-        }
-        .frame(width: 148, alignment: .leading)
-        .padding(14)
-        .background(.white, in: RoundedRectangle(cornerRadius: 14))
-        .overlay {
-            RoundedRectangle(cornerRadius: 14)
-                .strokeBorder(Color.wdlBorder, lineWidth: 1)
-        }
+        .padding(.top, WDLSpace.s)
     }
 
     private var searchBar: some View {
-        HStack(spacing: 10) {
+        HStack(spacing: WDLSpace.m) {
             Image(systemName: "magnifyingglass")
                 .foregroundStyle(Color.wdlGreen)
 
             TextField("Buscar tenista o país", text: $viewModel.searchText)
+                .font(WDLType.body)
                 .textInputAutocapitalization(.never)
                 .autocorrectionDisabled()
-                .font(WDLFont.sans(15))
 
             if !viewModel.searchText.isEmpty {
                 Button {
@@ -128,67 +73,161 @@ struct HomeView: View {
                         .foregroundStyle(Color.wdlInkSecondary)
                 }
                 .buttonStyle(.plain)
+                .accessibilityLabel("Limpiar búsqueda")
             }
         }
-        .padding(12)
-        .background(.white, in: RoundedRectangle(cornerRadius: 12))
+        .padding(.horizontal, WDLSpace.m)
+        .padding(.vertical, WDLSpace.m)
+        .background(Color.wdlPaper, in: RoundedRectangle(cornerRadius: WDLRadius.control))
         .overlay {
-            RoundedRectangle(cornerRadius: 12)
+            RoundedRectangle(cornerRadius: WDLRadius.control)
                 .strokeBorder(Color.wdlBorder, lineWidth: 1)
         }
-        .padding(.top, 4)
+    }
+
+    // MARK: - Banda de estadísticas
+
+    /// Una sola banda con tres datos separados por filetes, en vez de tres tarjetas.
+    private var statsBand: some View {
+        HStack(spacing: 0) {
+            stat(HomeViewModel.insights[0])
+            divider
+            stat(HomeViewModel.insights[1])
+            divider
+            stat(HomeViewModel.insights[2])
+        }
+        .padding(.vertical, WDLSpace.m)
+        .background(Color.wdlPaper, in: RoundedRectangle(cornerRadius: WDLRadius.container))
+        .overlay {
+            RoundedRectangle(cornerRadius: WDLRadius.container)
+                .strokeBorder(Color.wdlBorder, lineWidth: 1)
+        }
+    }
+
+    private var divider: some View {
+        Rectangle()
+            .fill(Color.wdlHairline)
+            .frame(width: 1, height: 34)
+    }
+
+    private func stat(_ insight: Insight) -> some View {
+        VStack(spacing: WDLSpace.xs) {
+            Text(insight.value)
+                .font(WDLFont.display(17, weight: .bold))
+                .foregroundStyle(Color.wdlDeepPurple)
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
+
+            Text(insight.title)
+                .font(WDLType.caption)
+                .foregroundStyle(Color.wdlGreen)
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
+        }
+        .frame(maxWidth: .infinity)
+        .accessibilityElement(children: .combine)
+    }
+
+    // MARK: - Lista
+
+    /// Una lámina continua con separadores, no una tarjeta por fila.
+    private var playerList: some View {
+        VStack(spacing: 0) {
+            ForEach(Array(viewModel.filteredItems.enumerated()), id: \.element.id) { index, item in
+                NavigationLink(value: item) {
+                    row(item)
+                }
+                .buttonStyle(.plain)
+
+                if index < viewModel.filteredItems.count - 1 {
+                    Rectangle()
+                        .fill(Color.wdlHairline)
+                        .frame(height: 1)
+                        .padding(.leading, 72)
+                }
+            }
+        }
+        .background(Color.wdlPaper, in: RoundedRectangle(cornerRadius: WDLRadius.container))
+        .overlay {
+            RoundedRectangle(cornerRadius: WDLRadius.container)
+                .strokeBorder(Color.wdlBorder, lineWidth: 1)
+        }
     }
 
     private func row(_ item: ItemModel) -> some View {
-        HStack(spacing: 14) {
+        HStack(spacing: WDLSpace.m) {
             avatar(item)
 
-            VStack(alignment: .leading, spacing: 3) {
+            VStack(alignment: .leading, spacing: 2) {
                 Text(item.name)
-                    .font(WDLFont.display(18, weight: .semibold))
+                    .font(WDLFont.display(17, weight: .semibold))
                     .foregroundStyle(Color.wdlDeepPurple)
+                    .lineLimit(1)
 
                 Text(item.subtitle)
-                    .font(WDLFont.sans(13))
+                    .font(WDLType.footnote)
                     .foregroundStyle(Color.wdlInkSecondary)
+                    .lineLimit(1)
             }
 
-            Spacer(minLength: 8)
+            Spacer(minLength: WDLSpace.s)
 
-            VStack(alignment: .trailing, spacing: 3) {
-                Text("#\(item.ranking)")
-                    .font(WDLFont.sans(14, weight: .semibold))
-                    .foregroundStyle(Color.wdlGreen)
-                Text("Ranking")
-                    .font(WDLFont.sans(10))
-                    .foregroundStyle(Color.wdlInkSecondary)
-            }
+            Text("#\(item.ranking)")
+                .font(WDLType.subhead)
+                .monospacedDigit()
+                .foregroundStyle(Color.wdlGreen)
 
             Image(systemName: "chevron.right")
-                .font(.system(size: 12, weight: .bold))
+                .font(.system(size: 11, weight: .bold))
                 .foregroundStyle(Color.wdlInkSecondary)
         }
-        .padding(14)
-        .background(.white, in: RoundedRectangle(cornerRadius: 14))
-        .overlay {
-            RoundedRectangle(cornerRadius: 14)
-                .strokeBorder(Color.wdlBorder, lineWidth: 1)
-        }
+        .padding(.horizontal, WDLSpace.m)
+        .padding(.vertical, WDLSpace.m)
+        .contentShape(Rectangle())
     }
 
     private func avatar(_ item: ItemModel) -> some View {
-        ZStack {
-            Circle()
-                .fill(Color.wdlGrass)
-            Image(item.imageName)
-                .resizable()
-                .scaledToFill()
-                .frame(width: 52, height: 52)
-                .clipShape(Circle())
+        Image(item.imageName)
+            .resizable()
+            .scaledToFill()
+            .frame(width: 44, height: 44)
+            .clipShape(Circle())
+            .overlay {
+                Circle().strokeBorder(Color.wdlPaper, lineWidth: 2)
+            }
+    }
+
+    // MARK: - Estado vacío
+
+    private var emptyState: some View {
+        VStack(spacing: WDLSpace.m) {
+            Image(systemName: "magnifyingglass")
+                .font(.system(size: 28, weight: .light))
+                .foregroundStyle(Color.wdlGreen)
+
+            Text("Ningún tenista coincide")
+                .font(WDLFont.display(17, weight: .semibold))
+                .foregroundStyle(Color.wdlDeepPurple)
+
+            Text("Prueba con un nombre, un país o la mano que juega.")
+                .font(WDLType.footnote)
+                .foregroundStyle(Color.wdlInkSecondary)
+                .multilineTextAlignment(.center)
+
+            Button("Limpiar búsqueda") {
+                viewModel.searchText = ""
+            }
+            .font(WDLType.subhead)
+            .foregroundStyle(Color.wdlGreen)
+            .padding(.top, WDLSpace.xs)
         }
-        .frame(width: 52, height: 52)
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, WDLSpace.xl)
+        .padding(.horizontal, WDLSpace.l)
+        .background(Color.wdlPaper, in: RoundedRectangle(cornerRadius: WDLRadius.container))
         .overlay {
-            Circle().strokeBorder(Color.wdlLime, lineWidth: 2)
+            RoundedRectangle(cornerRadius: WDLRadius.container)
+                .strokeBorder(Color.wdlBorder, lineWidth: 1)
         }
     }
 }

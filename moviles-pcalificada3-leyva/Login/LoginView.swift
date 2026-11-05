@@ -21,20 +21,24 @@ struct LoginView: View {
 
             GeometryReader { proxy in
                 ScrollView {
-                    VStack(spacing: 24) {
-                        VStack(spacing: 8) {
+                    VStack(spacing: WDLSpace.xl) {
+                        VStack(spacing: WDLSpace.xs) {
                             Text("WIMBLEDON")
-                                .font(WDLFont.display(34, weight: .bold))
+                                .font(WDLFont.display(28, weight: .bold))
                                 .tracking(3)
-                                .foregroundStyle(.white)
+                                .foregroundStyle(Color.wdlPaper)
+
+                            Rectangle()
+                                .fill(Color.wdlLime)
+                                .frame(width: 36, height: 2)
 
                             Text("THE CHAMPIONSHIPS")
-                                .font(WDLFont.sans(11, weight: .medium))
+                                .font(WDLType.caption)
                                 .tracking(3)
                                 .foregroundStyle(Color.wdlLime)
                         }
 
-                        VStack(spacing: 16) {
+                        VStack(spacing: WDLSpace.m) {
                             field(
                                 title: "Correo electrónico",
                                 symbol: "envelope",
@@ -59,26 +63,29 @@ struct LoginView: View {
                                 }
                             } label: {
                                 Text("Iniciar sesión")
-                                    .font(WDLFont.sans(17, weight: .semibold))
-                                    .foregroundStyle(.white)
+                                    .font(WDLType.subhead)
+                                    .foregroundStyle(Color.wdlPaper)
                                     .frame(maxWidth: .infinity)
-                                    .padding(.vertical, 16)
-                                    .background(Color.wdlGreen, in: RoundedRectangle(cornerRadius: 12))
+                                    .padding(.vertical, WDLSpace.m)
+                                    .background(Color.wdlGreen, in: RoundedRectangle(cornerRadius: WDLRadius.control))
                             }
                             .disabled(!viewModel.canSubmit)
-                            .opacity(viewModel.canSubmit ? 1 : 0.5)
+                            .opacity(viewModel.canSubmit ? 1 : 0.45)
 
                             Button(action: onRegister) {
                                 Text("¿No tienes cuenta? Regístrate")
-                                    .font(WDLFont.sans(14, weight: .medium))
+                                    .font(WDLType.footnote)
                                     .foregroundStyle(Color.wdlGreen)
                             }
                         }
-                        .padding(20)
-                        .background(.white, in: RoundedRectangle(cornerRadius: 16))
-                        .shadow(color: .black.opacity(0.12), radius: 12, y: 4)
+                        .padding(WDLSpace.l)
+                        .background(Color.wdlPaper, in: RoundedRectangle(cornerRadius: WDLRadius.container))
+                        .overlay {
+                            RoundedRectangle(cornerRadius: WDLRadius.container)
+                                .strokeBorder(Color.wdlBorder, lineWidth: 1)
+                        }
                     }
-                    .padding(.horizontal, 28)
+                    .padding(.horizontal, WDLSpace.l)
                     .frame(minHeight: proxy.size.height)
                     .frame(maxWidth: .infinity)
                 }
@@ -106,7 +113,7 @@ struct LoginView: View {
         isValid: Bool?,
         reveal: Binding<Bool>? = nil
     ) -> some View {
-        HStack(spacing: 12) {
+        HStack(spacing: WDLSpace.m) {
             Image(systemName: symbol)
                 .foregroundStyle(Color.wdlInkSecondary)
 
@@ -118,12 +125,14 @@ struct LoginView: View {
                         SecureField(title, text: text)
                     }
                 }
+                .font(WDLType.body)
                 .textInputAutocapitalization(.never)
                 .autocorrectionDisabled()
                 // Evita el panel amarillo de "contraseña sugerida" del simulador.
                 .textContentType(.password)
             } else {
                 TextField(title, text: text)
+                    .font(WDLType.body)
                     .textInputAutocapitalization(.never)
                     .keyboardType(.emailAddress)
                     .autocorrectionDisabled()
@@ -147,10 +156,11 @@ struct LoginView: View {
                     .transition(.opacity)
             }
         }
-        .padding(14)
-        .background(Color.wdlSurface, in: RoundedRectangle(cornerRadius: 10))
+        .padding(.horizontal, WDLSpace.m)
+        .padding(.vertical, WDLSpace.m)
+        .background(Color.wdlSurface, in: RoundedRectangle(cornerRadius: WDLRadius.control))
         .overlay {
-            RoundedRectangle(cornerRadius: 10)
+            RoundedRectangle(cornerRadius: WDLRadius.control)
                 .strokeBorder(strokeColor(isValid), lineWidth: 1.5)
         }
         .animation(.easeInOut(duration: 0.2), value: isValid)

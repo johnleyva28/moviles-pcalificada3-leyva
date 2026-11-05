@@ -29,25 +29,21 @@ struct ToastView: View {
     }
 
     var body: some View {
-        HStack(spacing: 10) {
+        HStack(spacing: WDLSpace.s) {
             Image(systemName: icon)
                 .foregroundStyle(tint)
 
             Text(toast.message)
-                .font(WDLFont.sans(14, weight: .medium))
-                .foregroundStyle(.white)
+                .font(WDLType.footnote)
+                .foregroundStyle(Color.wdlPaper)
                 .multilineTextAlignment(.leading)
                 .fixedSize(horizontal: false, vertical: true)
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 13)
-        .background(Color.wdlInk, in: RoundedRectangle(cornerRadius: 14))
-        .overlay {
-            RoundedRectangle(cornerRadius: 14)
-                .strokeBorder(Color.white.opacity(0.12), lineWidth: 1)
-        }
-        .shadow(color: .black.opacity(0.28), radius: 14, y: 6)
-        .padding(.horizontal, 24)
+        .padding(.horizontal, WDLSpace.m)
+        .padding(.vertical, WDLSpace.m)
+        .background(Color.wdlInk, in: RoundedRectangle(cornerRadius: WDLRadius.control))
+        .shadow(color: .black.opacity(0.24), radius: 12, y: 5)
+        .padding(.horizontal, WDLSpace.l)
     }
 }
 
@@ -57,7 +53,7 @@ extension View {
         overlay(alignment: .top) {
             if let toast {
                 ToastView(toast: toast)
-                    .padding(.top, 8)
+                    .padding(.top, WDLSpace.s)
                     .transition(.move(edge: .top).combined(with: .opacity))
             }
         }
