@@ -43,7 +43,7 @@ struct LoginView: View {
     private func field(_ title: String, text: Binding<String>, symbol: String) -> some View {
         HStack(spacing: 12) {
             Image(systemName: symbol)
-                .foregroundStyle(.wdlInkSecondary)
+                .foregroundStyle(Color.wdlInkSecondary)
             TextField(title, text: text)
                 .textInputAutocapitalization(.never)
                 .autocorrectionDisabled()

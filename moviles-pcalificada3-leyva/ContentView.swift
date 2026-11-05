@@ -6,13 +6,14 @@ struct ContentView: View {
     @State private var route: Route = .splash
 
     var body: some View {
-        switch route {
-        case .splash:
-            SplashView { route = .login }
-                .transition(.opacity)
-        case .login:
-            LoginView()
-                .transition(.opacity)
+        ZStack {
+            if route == .splash {
+                SplashView { route = .login }
+                    .transition(.opacity)
+            } else {
+                LoginView()
+                    .transition(.opacity)
+            }
         }
         .animation(.easeInOut(duration: 0.4), value: route)
     }

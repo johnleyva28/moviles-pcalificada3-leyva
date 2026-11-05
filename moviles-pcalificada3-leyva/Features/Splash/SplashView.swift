@@ -15,7 +15,7 @@ struct SplashView: View {
             .ignoresSafeArea()
 
             Circle()
-                .fill(.wdlLime.opacity(0.12))
+                .fill(Color.wdlLime.opacity(0.12))
                 .frame(width: 340, height: 340)
                 .blur(radius: 60)
                 .offset(y: -80)
@@ -40,7 +40,7 @@ struct SplashView: View {
                     Text("THE CHAMPIONSHIPS")
                         .font(WDLFont.sans(13, weight: .medium))
                         .tracking(3.5)
-                        .foregroundStyle(.wdlLime)
+                        .foregroundStyle(Color.wdlLime)
                 }
                 .opacity(appeared ? 1 : 0)
                 .offset(y: appeared ? 0 : 24)
@@ -69,7 +69,7 @@ private struct TennisBall: View {
                     x: center.x - radius, y: center.y - radius,
                     width: radius * 2, height: radius * 2
                 )),
-                with: .color(.wdlLimeSoft)
+                with: .color(Color.wdlLimeSoft)
             )
 
             // Costura característica: dos arcos enfrentados ")("
