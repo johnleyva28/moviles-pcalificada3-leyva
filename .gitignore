@@ -63,3 +63,6 @@ secrets.xcconfig
 .remember/
 .claude/
 CLAUDE.md
+
+# Herramientas locales
+.playwright-mcp/
