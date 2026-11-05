@@ -186,15 +186,22 @@ struct HomeView: View {
         .contentShape(Rectangle())
     }
 
+    /// Disco de césped verde con la foto encima, como antes del rediseño.
     private func avatar(_ item: ItemModel) -> some View {
-        Image(item.imageName)
-            .resizable()
-            .scaledToFill()
-            .frame(width: 44, height: 44)
-            .clipShape(Circle())
-            .overlay {
-                Circle().strokeBorder(Color.wdlPaper, lineWidth: 2)
-            }
+        ZStack {
+            Circle()
+                .fill(Color.wdlGrass)
+
+            Image(item.imageName)
+                .resizable()
+                .scaledToFill()
+                .frame(width: 38, height: 38)
+                .clipShape(Circle())
+        }
+        .frame(width: 44, height: 44)
+        .overlay {
+            Circle().strokeBorder(Color.wdlPaper, lineWidth: 2)
+        }
     }
 
     // MARK: - Estado vacío

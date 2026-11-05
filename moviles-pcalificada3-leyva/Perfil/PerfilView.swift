@@ -3,6 +3,9 @@ import SwiftUI
 struct PerfilView: View {
     @EnvironmentObject private var session: SessionStore
 
+    @State private var isEditingName = false
+    @State private var draftName = ""
+
     let onLogout: () -> Void
 
     var body: some View {
@@ -43,22 +46,22 @@ struct PerfilView: View {
         VStack(spacing: WDLSpace.m) {
             ZStack {
                 Circle()
-                    .fill(Color.wdlGrass)
+                    .fill(Color.wdlMint)
                 Image(systemName: "person.fill")
-                    .font(.system(size: 38, weight: .semibold))
-                    .foregroundStyle(Color.wdlMint)
+                    .font(.system(size: 34, weight: .medium))
+                    .foregroundStyle(Color.wdlPurple)
             }
             .frame(width: 84, height: 84)
 
-            VStack(spacing: 2) {
-                Text(session.currentUser?.name ?? "Usuario")
-                    .font(WDLType.title)
-                    .foregroundStyle(Color.wdlDeepPurple)
-
-                Text(session.currentUser?.email ?? "sin correo")
-                    .font(WDLType.body)
-                    .foregroundStyle(Color.wdlInkSecondary)
+            if isEditingName {
+                nameEditor
+            } else {
+                nameDisplay
             }
+
+            Text(session.currentUser?.email ?? "sin correo")
+                .font(WDLType.footnote)
+                .foregroundStyle(Color.wdlInkSecondary)
 
             HStack(spacing: 0) {
                 stat(value: "\(session.registeredUsers.count)", label: "Cuentas")
@@ -75,6 +78,56 @@ struct PerfilView: View {
         .overlay {
             RoundedRectangle(cornerRadius: WDLRadius.container)
                 .strokeBorder(Color.wdlBorder, lineWidth: 1)
+        }
+    }
+
+    private var nameDisplay: some View {
+        HStack(spacing: WDLSpace.s) {
+            Text(session.currentUser?.name ?? "Usuario")
+                .font(WDLType.title)
+                .foregroundStyle(Color.wdlDeepPurple)
+
+            Button {
+                draftName = session.currentUser?.name ?? ""
+                isEditingName = true
+            } label: {
+                Image(systemName: "pencil")
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundStyle(Color.wdlGreen)
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel("Cambiar nombre")
+        }
+    }
+
+    private var nameEditor: some View {
+        VStack(spacing: WDLSpace.s) {
+            TextField("Tu nombre", text: $draftName)
+                .font(WDLType.subhead)
+                .textInputAutocapitalization(.words)
+                .multilineTextAlignment(.center)
+                .padding(.vertical, WDLSpace.s)
+                .padding(.horizontal, WDLSpace.m)
+                .background(Color.wdlSurface, in: RoundedRectangle(cornerRadius: WDLRadius.control))
+                .overlay {
+                    RoundedRectangle(cornerRadius: WDLRadius.control)
+                        .strokeBorder(Color.wdlGreen, lineWidth: 1.5)
+                }
+
+            HStack(spacing: WDLSpace.m) {
+                Button("Cancelar") {
+                    isEditingName = false
+                }
+                .font(WDLType.footnote)
+                .foregroundStyle(Color.wdlInkSecondary)
+
+                Button("Guardar") {
+                    session.updateName(draftName)
+                    isEditingName = false
+                }
+                .font(WDLType.footnote)
+                .foregroundStyle(Color.wdlGreen)
+            }
         }
     }
 

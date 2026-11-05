@@ -37,6 +37,22 @@ final class SessionStore: ObservableObject {
         currentUser = nil
     }
 
+    /// Cambia el nombre visible del usuario autenticado (el correo no se modifica:
+    /// es el identificador con el que inicia sesión).
+    func updateName(_ name: String) {
+        let trimmed = name.trimmingCharacters(in: .whitespaces)
+        guard !trimmed.isEmpty else { return }
+
+        if var user = currentUser {
+            user.name = trimmed
+            currentUser = user
+        }
+
+        if let index = registeredUsers.firstIndex(where: { $0.id == currentUser?.id }) {
+            registeredUsers[index].name = trimmed
+        }
+    }
+
     private static func name(from email: String) -> String {
         String(email.split(separator: "@").first ?? "Usuario")
     }
