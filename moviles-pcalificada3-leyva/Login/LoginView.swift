@@ -4,6 +4,8 @@ struct LoginView: View {
     @EnvironmentObject private var session: SessionStore
     @StateObject private var viewModel = LoginViewModel()
 
+    @State private var showsPassword = false
+
     let onRegister: () -> Void
     let onSuccess: () -> Void
 
@@ -44,7 +46,8 @@ struct LoginView: View {
                                 symbol: "lock",
                                 isSecure: true,
                                 text: $viewModel.password,
-                                isValid: viewModel.password.isEmpty ? nil : viewModel.isPasswordValid
+                                isValid: viewModel.password.isEmpty ? nil : viewModel.isPasswordValid,
+                                reveal: $showsPassword
                             )
 
                             if let error = viewModel.errorMessage {
@@ -95,21 +98,42 @@ struct LoginView: View {
         symbol: String,
         isSecure: Bool = false,
         text: Binding<String>,
-        isValid: Bool?
+        isValid: Bool?,
+        reveal: Binding<Bool>? = nil
     ) -> some View {
         HStack(spacing: 12) {
             Image(systemName: symbol)
                 .foregroundStyle(Color.wdlInkSecondary)
 
             if isSecure {
-                SecureField(title, text: text)
-                    .textInputAutocapitalization(.never)
-                    .autocorrectionDisabled()
+                Group {
+                    if reveal?.wrappedValue == true {
+                        TextField(title, text: text)
+                    } else {
+                        SecureField(title, text: text)
+                    }
+                }
+                .textInputAutocapitalization(.never)
+                .autocorrectionDisabled()
+                // Evita el panel amarillo de "contraseña sugerida" del simulador.
+                .textContentType(.password)
             } else {
                 TextField(title, text: text)
                     .textInputAutocapitalization(.never)
                     .keyboardType(.emailAddress)
                     .autocorrectionDisabled()
+                    .textContentType(.emailAddress)
+            }
+
+            if let reveal {
+                Button {
+                    reveal.wrappedValue.toggle()
+                } label: {
+                    Image(systemName: reveal.wrappedValue ? "eye.slash" : "eye")
+                        .foregroundStyle(Color.wdlInkSecondary)
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel(reveal.wrappedValue ? "Ocultar contraseña" : "Mostrar contraseña")
             }
 
             if let isValid {

@@ -4,6 +4,9 @@ struct RegistroView: View {
     @EnvironmentObject private var session: SessionStore
     @StateObject private var viewModel = RegistroViewModel()
 
+    @State private var showsPassword = false
+    @State private var showsConfirmPassword = false
+
     let onBack: () -> Void
     let onRegistered: () -> Void
 
@@ -52,7 +55,8 @@ struct RegistroView: View {
                                 symbol: "lock",
                                 isSecure: true,
                                 text: $viewModel.password,
-                                isValid: nil
+                                isValid: nil,
+                                reveal: $showsPassword
                             )
 
                             field(
@@ -60,7 +64,8 @@ struct RegistroView: View {
                                 symbol: "lock.rotation",
                                 isSecure: true,
                                 text: $viewModel.confirmPassword,
-                                isValid: viewModel.confirmPassword.isEmpty ? nil : viewModel.passwordsMatch
+                                isValid: viewModel.confirmPassword.isEmpty ? nil : viewModel.passwordsMatch,
+                                reveal: $showsConfirmPassword
                             )
 
                             if let error = viewModel.errorMessage {
@@ -124,21 +129,42 @@ struct RegistroView: View {
         isSecure: Bool = false,
         isEmail: Bool = false,
         text: Binding<String>,
-        isValid: Bool?
+        isValid: Bool?,
+        reveal: Binding<Bool>? = nil
     ) -> some View {
         HStack(spacing: 12) {
             Image(systemName: symbol)
                 .foregroundStyle(Color.wdlInkSecondary)
 
             if isSecure {
-                SecureField(title, text: text)
-                    .textInputAutocapitalization(.never)
-                    .autocorrectionDisabled()
+                Group {
+                    if reveal?.wrappedValue == true {
+                        TextField(title, text: text)
+                    } else {
+                        SecureField(title, text: text)
+                    }
+                }
+                .textInputAutocapitalization(.never)
+                .autocorrectionDisabled()
+                // Evita el panel amarillo de "contraseña sugerida" del simulador.
+                .textContentType(.password)
             } else {
                 TextField(title, text: text)
                     .textInputAutocapitalization(isEmail ? .never : .words)
                     .keyboardType(isEmail ? .emailAddress : .default)
                     .autocorrectionDisabled()
+                    .textContentType(isEmail ? .emailAddress : .name)
+            }
+
+            if let reveal {
+                Button {
+                    reveal.wrappedValue.toggle()
+                } label: {
+                    Image(systemName: reveal.wrappedValue ? "eye.slash" : "eye")
+                        .foregroundStyle(Color.wdlInkSecondary)
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel(reveal.wrappedValue ? "Ocultar contraseña" : "Mostrar contraseña")
             }
 
             if let isValid {
